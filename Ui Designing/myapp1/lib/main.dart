@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:myapp1/Advance/DynamicColor.dart';
 import 'package:myapp1/Advance/Gridview.dart';
 import 'package:myapp1/Advance/Listview.dart';
+import 'package:myapp1/Advance/Sample.dart';
+import 'package:myapp1/Advance/Validation.dart';
 import 'package:myapp1/Screens/Home_Screen.dart';
 import 'package:myapp1/Screens/Login.dart';
 import 'package:myapp1/Screens/Second_Screen.dart';
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ColorChanging(),
+      home:Reg_Screen(),
     );
   }
 }
