@@ -1,0 +1,10 @@
+const singup = "Sign Up ";
+const login = "Login";
+const name = "Name";
+const surname = "Surname";
+const password = "Password";
+const passwordhint = "******";
+const namehint = "Enter your Name";
+const surnamehint = "Enter your Surname";
+const email = "Example@gmail.com";
+const emailhint = "Enter your Email here";
