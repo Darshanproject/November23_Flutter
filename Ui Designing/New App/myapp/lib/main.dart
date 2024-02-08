@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:myapp/Bottom_navigation.dart';
+import 'package:myapp/List.dart';
+import 'package:myapp/Screen.dart';
 import 'package:myapp/Screens/Splash%20Screen/Splash_Screen.dart';
 import 'package:myapp/View/Auth/Login.dart';
 
@@ -11,9 +14,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  GetMaterialApp(
+    return  const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login_Screen(),
+      home: Bottom_Screen(),
     );
   }
 }
