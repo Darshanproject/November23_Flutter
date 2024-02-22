@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:myapp/Screens/Splash%20Screen/TabbarAdvance.dart';
 import 'package:myapp/Splash%20Screen/Saplsha_Screen.dart';
 
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-      home: Splash_Screen(),
+      home: TabBarExample(),
     );
   }
 }
