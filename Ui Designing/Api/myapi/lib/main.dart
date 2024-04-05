@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myapi/Crud/edit.dart';
+import 'package:myapi/Crud/view.dart';
 import 'package:myapi/Screens/Home_Screen.dart';
 import 'package:myapi/Screens/ListApiFetching.dart';
 
@@ -13,7 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: List_Fetching_Api(),
+    //  home: Edit(index: 1,data: ["gadadarshan@gamil.com","asdfghj"],),
+     home: View_Screen(),
     );
   }
 }

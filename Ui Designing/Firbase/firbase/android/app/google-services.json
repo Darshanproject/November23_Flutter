@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "827541937089",
+    "project_id": "aziza-8a007",
+    "storage_bucket": "aziza-8a007.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827541937089:android:9680a191659506d89e6d40",
+        "android_client_info": {
+          "package_name": "com.example.firbase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-0qV8Iqb15lmOP1wUshFr5wyl610N8mQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
