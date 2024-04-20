@@ -24,6 +24,7 @@ class _View_ScreenState extends State<View_Screen> {
       throw Exception('Failed to Load data');
     }
   }
+  
   @override
   
 
@@ -31,7 +32,30 @@ class _View_ScreenState extends State<View_Screen> {
   void initState() {
     super.initState();
     data = fetchData();
+
   }
+    Future<void> delete(String id) async {
+  try {
+    final response = await http.delete(
+      Uri.parse("https://database20810.000webhostapp.com/FlutterCrude/delete.php"),
+      body: jsonEncode({'id': id.toString()}),
+    );
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Data Deleted")));
+      // Refresh the data after deletion
+      setState(() {
+        data = fetchData();
+      });
+    } else {
+      throw Exception('Failed to delete data');
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error deleting data: $e',style: TextStyle(fontSize: 24,color: Colors.black),),backgroundColor: Colors.white,duration: Duration(seconds: 12),));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to delete data")));
+  }
+}
+
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
@@ -67,17 +91,22 @@ class _View_ScreenState extends State<View_Screen> {
                     child: Row(
                       children: [
                         IconButton(onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Edit(data: item[index], index: index)));
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Edit(email: item['email'],name: item['name'],id: item['id'],)));
                         }, icon: Icon(Icons.edit,color: Colors.green ,)),
                         IconButton(onPressed: (){
+                          setState(() {
+                            delete(item['id'].toString());
+                          });
+                        }, icon: Icon(Icons.delete,color: Colors.red,))
+//                         IconButton(onPressed: (){
                           
-delete() async {
-  http.post(Uri.parse("https://database20810.000webhostapp.com/FlutterCrude/delete.php"),body: {
-    'id': item[index]
-  });
+// delete() async {
+//   http.post(Uri.parse("https://database20810.000webhostapp.com/FlutterCrude/delete.php"),body: {
+//     'id': item[index]
+//   });
 
-}
-                        }, icon: Icon(Icons.delete,color: Colors.red ,)),
+// }
+//                         }, icon: Icon(Icons.delete,color: Colors.red ,)),
                       ],
                     ),
                   )

@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
     //  home: Edit(index: 1,data: ["gadadarshan@gamil.com","asdfghj"],),
      home: View_Screen(),
