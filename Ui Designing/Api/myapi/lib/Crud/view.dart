@@ -13,6 +13,40 @@ class View_Screen extends StatefulWidget {
 }
 
 class _View_ScreenState extends State<View_Screen> {
+  final String apiUrl = 'https://database20810.000webhostapp.com/FlutterCrude/delete.php';
+
+Future<void> deleteData(BuildContext context, String id) async {
+  try {
+    var response = await http.delete(
+      Uri.parse('$apiUrl/$id'),
+      // headers: <String, String>{
+      //   'Content-Type': 'application/json; charset=UTF-8',
+      // },
+    );
+
+    if (response.statusCode == 200) {
+      // Item deleted successfully
+      Text('Item deleted successfully');
+    } else {
+      // Error occurred while deleting item
+      Text('Failed to delete item. Error: ${response.statusCode}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to delete item. Error: ${response.statusCode}'),
+        ),
+      );
+    }
+  } catch (e) {
+    // Error occurred during HTTP request
+    print('Error deleting item: $e');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error deleting item: $e',style: TextStyle(fontSize: 24),),duration: Duration(seconds: 12),
+      ),
+    );
+  }
+}
+
     late  Future<List<Map<String,dynamic>>> data; 
     Future <List<Map<String,dynamic>>> fetchData() async {
     final response = await http.get(Uri.parse("https://database20810.000webhostapp.com/FlutterCrude/view.php"));
@@ -34,27 +68,27 @@ class _View_ScreenState extends State<View_Screen> {
     data = fetchData();
 
   }
-    Future<void> delete(String id) async {
-  try {
-    final response = await http.delete(
-      Uri.parse("https://database20810.000webhostapp.com/FlutterCrude/delete.php"),
-      body: jsonEncode({'id': id.toString()}),
-    );
-    if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Data Deleted")));
-      // Refresh the data after deletion
-      setState(() {
-        data = fetchData();
-      });
-    } else {
-      throw Exception('Failed to delete data');
-    }
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error deleting data: $e',style: TextStyle(fontSize: 24,color: Colors.black),),backgroundColor: Colors.white,duration: Duration(seconds: 12),));
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to delete data")));
-  }
-}
+//     Future<void> delete(String id) async {
+//   try {
+//     final response = await http.delete(
+//       Uri.parse("https://database20810.000webhostapp.com/FlutterCrude/delete.php"),
+//       body: jsonEncode({'id': id.toString()}),
+//     );
+//     if (response.statusCode == 200) {
+//       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Data Deleted")));
+//       // Refresh the data after deletion
+//       setState(() {
+//         data = fetchData();
+//       });
+//     } else {
+//       throw Exception('Failed to delete data');
+//     }
+//   } catch (e) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text('Error deleting data: $e',style: TextStyle(fontSize: 24,color: Colors.black),),backgroundColor: Colors.white,duration: Duration(seconds: 12),));
+//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to delete data")));
+//   }
+// }
 
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -65,7 +99,7 @@ class _View_ScreenState extends State<View_Screen> {
        if (snapshot.data == ConnectionState.waiting) {
           return CircularProgressIndicator();
        }else if (snapshot.hasError) {
-          return Center(child: Text(snapshot.error.toString()));
+          return Center(child: Text(snapshot.error.toString(),style: TextStyle(fontSize: 24),));
        }else if(snapshot.hasData){
         return ListView.builder(
           itemCount: snapshot.data!.length,
@@ -90,23 +124,9 @@ class _View_ScreenState extends State<View_Screen> {
                   Container(
                     child: Row(
                       children: [
-                        IconButton(onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Edit(email: item['email'],name: item['name'],id: item['id'],)));
-                        }, icon: Icon(Icons.edit,color: Colors.green ,)),
-                        IconButton(onPressed: (){
-                          setState(() {
-                            delete(item['id'].toString());
-                          });
-                        }, icon: Icon(Icons.delete,color: Colors.red,))
-//                         IconButton(onPressed: (){
-                          
-// delete() async {
-//   http.post(Uri.parse("https://database20810.000webhostapp.com/FlutterCrude/delete.php"),body: {
-//     'id': item[index]
-//   });
-
-// }
-//                         }, icon: Icon(Icons.delete,color: Colors.red ,)),
+                        ElevatedButton(onPressed: (){
+                          deleteData(context, item['id'].toString());
+                        }, child: Text("Delete"))
                       ],
                     ),
                   )
@@ -127,3 +147,54 @@ class _View_ScreenState extends State<View_Screen> {
     );
   }
 }
+
+
+
+
+
+
+/*
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final String apiUrl = 'YOUR_API_URL_HERE';
+
+  Future<void> deleteData(String id) async {
+    var response = await http.delete(
+      Uri.parse('$apiUrl/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // Item deleted successfully
+      print('Item deleted successfully');
+    } else {
+      // Error occurred while deleting item
+      print('Failed to delete item. Error: ${response.statusCode}');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter Delete Method Demo'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Call delete method here, pass the ID of the item to be deleted
+            deleteData('ITEM_ID_TO_DELETE');
+          },
+          child: Text('Delete Item'),
+        ),
+      ),
+    );
+  }
+}
+*/
